@@ -1,0 +1,238 @@
+@font-face {
+  font-family: norse-bold;
+  src: url(norse-bold.otf);
+}
+
+:root {
+  --base-background-color: white;
+  --base-text-color: black;
+  --asterisk-color: red;
+  --checkmark-color: green;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --base-background-color: rgb(25, 2, 49);
+    --base-text-color: white;
+    --asterisk-color: rgb(255, 170, 0);
+    --checkmark-color: rgb(35, 248, 12);
+  }
+}
+
+body, ul, li,
+body > div:last-child,
+form > div:first-child,
+form > div:last-child {
+  display: flex;
+}
+
+body {
+  margin: 0;
+  color: var(--base-text-color);
+  background-color: var(--base-background-color);
+  font-family: sans-serif, Times;
+}
+
+body > div:first-child {
+  background-size: cover;
+  background-image: url('eagle.jpg');
+  width: 33vw;
+  height: 100vh;
+  text-align: left;
+  color: white;
+  font-size: 1.2rem;
+  position: relative;
+}
+body > div:first-child::before {
+  position: absolute;
+  content: 'EA';
+  font-size: min(6.5rem, 10vw);
+  font-family: norse-bold, sans-serif, Times;
+  top: 11rem;
+  left: 2.75rem;
+  opacity: 0.33;
+  background-color: black;
+  border-radius: 25%;
+}
+
+body > div > a {
+  text-decoration: none;
+  color: rgb(0, 255, 255);
+}
+body > div > a:hover,
+body > div > a:focus {
+  color: rgb(31, 246, 135);
+}
+
+ul, li,
+body > div:last-child {
+  flex-direction: column;
+}
+
+p {
+  line-height: 1;
+  margin: 0;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  user-select: all;
+  cursor: grab;
+}
+ p::selection,
+br::selection,
+em::selection {
+  background-color: gold;
+  color: black;
+}
+
+form > div:first-child {
+  flex-direction: row;
+  justify-content: space-between;
+}
+form > div:last-child {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+ul { justify-content: space-between }
+
+li {
+  list-style: none;
+  margin-bottom: 3.6rem;
+}
+label {
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  font-size: .8rem;
+  padding-bottom: 2px;
+  user-select: none;
+}
+input {
+  width: clamp(30vw, 15rem, 60vw);
+  height: 1.5rem;
+  margin-right: 1rem;
+  border-radius: 5px;
+  border-color: rgb(239, 232, 232);
+  font-size: 1.4rem;
+}
+
+input:focus:valid {
+  border: 2.5px groove blue;
+  box-shadow: 2px 1px;
+}
+input:focus:invalid {
+  border: 4.5px groove red;
+  box-shadow: 2x 1px;
+}
+
+label {
+  position: relative;
+}
+label[for*=r]::before {
+  position: absolute;
+  content: '*';
+  font-weight: bold;
+  top: -0.5rem;
+  left: -0.8rem;
+  font-size: 1.4rem;
+  color: var(--asterisk-color);
+}
+
+span {
+  position: relative;
+}
+
+      #first-name:valid /* for '✓'off in ... */ + span::before,
+       #last-name:valid:not(:placeholder-shown) + span::before,
+    #phone-number:valid /*  ...    empty ... */ + span::before,
+           #email:valid:not(:placeholder-shown) + span::before,
+        #password:valid /*  ... optional ... */ ~ span::before,
+#confirm-password:valid /*  ... input fields */ + span::before
+{
+  position: absolute;
+  content: '✓';
+  font-size: 2.5rem;
+  top: -2.5rem;
+  left: -2.1rem;
+  color: var(--checkmark-color);
+}
+
+      #first-name:invalid:focus + span::after,
+       #last-name:invalid:focus + span::after,
+    #phone-number:invalid:focus + span::after,
+           #email:invalid:focus + span::after,
+        #password:invalid:focus ~ span::after,
+#confirm-password:invalid:focus + span::after
+{
+  position: absolute;
+  height: 14rem;
+}
+
+       #first-name:invalid:focus + span::after,
+        #last-name:invalid:focus + span::after,
+     #phone-number:invalid:focus + span::after,
+            #email:invalid:focus + span::after,
+ #confirm-password:invalid:focus + span::after
+{
+  padding-top: 5.8px;
+  width: 17.5rem;
+  font-size: larger;
+  color: var(--asterisk-color);
+}
+
+#first-name:invalid:focus + span::after {
+  content: "* Please, enter first name";
+}
+#last-name:invalid:focus + span::after {
+  content: "* Please, enter last name";
+}
+#phone-number:invalid:focus + span::after {
+  content: "* Please, enter full number";
+}
+#email:invalid:focus + span::after {
+  content: "* Please, enter email addr";
+}
+
+#password:invalid:focus ~ span::after {
+  font-size: larger;
+  width: clamp(30vw, 18.5rem, 60vw);
+}
+#password:invalid:focus + span::after {
+  padding-top: 5.8px;
+  content: "* Only available: latin letters, arabic digits, underscores";
+  color: var(--asterisk-color);
+}
+#password:invalid:focus ~ span:last-of-type::after {
+  padding-top: 50.8px;
+  content: "Must-have: digit, underscore, lowercase+uppercase letters";
+  color: orangered;
+  font-style: oblique;
+}
+#confirm-password:invalid:focus + span::after {
+  content: '* Passwords do not match...';
+}
+
+hr {
+  margin-top: 2rem;
+  border: .1rem inset rgba(240, 248, 255, 0.325);
+}
+button {
+  cursor: progress;
+  height: 3rem;
+  width: 14rem;
+  border-radius: 8px;
+  margin: 0 2.4rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #596D48;
+}
+
+form p {
+  font-size: 1.15rem;
+}
+form p a {
+  text-decoration: none;
+  user-select: none;
+  font-weight: bold;
+  color: rgb(30, 180, 1);
+}
